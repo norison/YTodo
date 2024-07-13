@@ -1,0 +1,38 @@
+﻿name: ytodo
+
+services:
+  api:
+    container_name: ytodo-api
+    build:
+      context: ../
+      dockerfile: .docker/Api.Dockerfile
+    ports:
+      - "8080:8080"
+    networks:
+      - main
+    environment:
+      ConnectionStrings__DefaultConnection: "Server=mssql;Database=YTodo;User Id=sa;Password=Password1234$;TrustServerCertificate=True;MultipleActiveResultSets=true;"
+    depends_on:
+      mssql:
+        condition: service_healthy
+  
+  mssql:
+    container_name: ytodo-mssql
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "Password1234$"
+      ACCEPT_EULA: "Y"
+    networks:
+      - main
+    healthcheck:
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Password1234$ -Q 'SELECT 1' || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 20
+      start_period: 10s
+
+networks:
+  main:
+    driver: bridge
