@@ -8,10 +8,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTodo.Persistence", "src\api\YTodo.Persistence\YTodo.Persistence.csproj", "{F13AB1C5-2CA2-4020-B402-8A3C21B5A786}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "api", "api", "{E1BEE817-03FE-4F0F-94EF-314A98041802}"
-	ProjectSection(SolutionItems) = preProject
-		src\api\New File 2.txt = src\api\New File 2.txt
-		src\api\NewFile3.txt = src\api\NewFile3.txt
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YTodo.Api", "src\api\YTodo.Api\YTodo.Api.csproj", "{B56322A1-8176-42A7-A056-0AD4215A2524}"
 EndProject
