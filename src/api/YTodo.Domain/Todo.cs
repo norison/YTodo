@@ -1,6 +1,6 @@
-﻿namespace YTodo.Persistence.Entities;
+﻿namespace YTodo.Domain;
 
-public class TaskEntity
+public class Todo
 {
     public int Id { get; set; }
     public string Title { get; set; } = string.Empty;
@@ -8,7 +8,4 @@ public class TaskEntity
     public bool IsCompleted { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? CompletedAt { get; set; }
-    
-    public int UserId { get; set; }
-    public UserEntity? User { get; set; }
 }
