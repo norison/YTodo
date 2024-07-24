@@ -5,11 +5,11 @@ using YTodo.Persistence.Entities;
 
 namespace YTodo.Persistence.EntityTypeConfigurations;
 
-public class TaskEntityTypeConfiguration : IEntityTypeConfiguration<TaskEntity>
+public class TodoEntityTypeConfiguration : IEntityTypeConfiguration<TodoEntity>
 {
-    public void Configure(EntityTypeBuilder<TaskEntity> builder)
+    public void Configure(EntityTypeBuilder<TodoEntity> builder)
     {
-        builder.ToTable("tb_Task");
+        builder.ToTable("tb_Todo");
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();

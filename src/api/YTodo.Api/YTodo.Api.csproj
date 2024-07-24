@@ -4,10 +4,12 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <UserSecretsId>3b2d9e87-7e68-47ad-a61f-3bf5aa2f9d98</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\YTodo.Application\YTodo.Application.csproj" />
+      <ProjectReference Include="..\YTodo.Persistence\YTodo.Persistence.csproj" />
     </ItemGroup>
 
     <ItemGroup>

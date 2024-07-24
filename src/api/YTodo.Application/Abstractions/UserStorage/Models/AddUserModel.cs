@@ -1,11 +1,8 @@
-﻿namespace YTodo.Persistence.Entities;
+﻿namespace YTodo.Application.Abstractions.UserStorage.Models;
 
-public class UserEntity
+public class AddUserModel
 {
-    public int Id { get; set; }
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string FullName { get; set; } = string.Empty;
-    
-    public IEnumerable<TodoEntity>? Tasks { get; set; }
 }

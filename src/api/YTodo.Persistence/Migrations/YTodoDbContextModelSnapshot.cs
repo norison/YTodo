@@ -22,7 +22,7 @@ namespace YTodo.Persistence.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("YTodo.Persistence.Entities.TaskEntity", b =>
+            modelBuilder.Entity("YTodo.Persistence.Entities.TodoEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +56,7 @@ namespace YTodo.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("tb_Task", (string)null);
+                    b.ToTable("tb_Todo", (string)null);
                 });
 
             modelBuilder.Entity("YTodo.Persistence.Entities.UserEntity", b =>
@@ -87,7 +87,7 @@ namespace YTodo.Persistence.Migrations
                     b.ToTable("tb_User", (string)null);
                 });
 
-            modelBuilder.Entity("YTodo.Persistence.Entities.TaskEntity", b =>
+            modelBuilder.Entity("YTodo.Persistence.Entities.TodoEntity", b =>
                 {
                     b.HasOne("YTodo.Persistence.Entities.UserEntity", "User")
                         .WithMany("Tasks")

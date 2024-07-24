@@ -27,7 +27,7 @@ namespace YTodo.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "tb_Task",
+                name: "tb_Todo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -41,9 +41,9 @@ namespace YTodo.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_tb_Task", x => x.Id);
+                    table.PrimaryKey("PK_tb_Todo", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_tb_Task_tb_User_UserId",
+                        name: "FK_tb_Todo_tb_User_UserId",
                         column: x => x.UserId,
                         principalTable: "tb_User",
                         principalColumn: "Id",
@@ -51,8 +51,8 @@ namespace YTodo.Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_tb_Task_UserId",
-                table: "tb_Task",
+                name: "IX_tb_Todo_UserId",
+                table: "tb_Todo",
                 column: "UserId");
         }
 
@@ -60,7 +60,7 @@ namespace YTodo.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "tb_Task");
+                name: "tb_Todo");
 
             migrationBuilder.DropTable(
                 name: "tb_User");
