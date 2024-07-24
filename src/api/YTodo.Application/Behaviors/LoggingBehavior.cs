@@ -18,19 +18,23 @@ public class LoggingBehavior<TMessage, TResponse>(ILogger<LoggingBehavior<TMessa
     {
         var typeName = message.GetType().Name;
 
+        logger.LogHandlingMessage(typeName);
+        
         try
         {
-            logger.LogHandlingMessage(typeName);
-
             var response = await next(message, cancellationToken);
 
-            logger.LogHandledMessage(typeName);
-
+            if (logger.IsEnabled(LogLevel.Trace))
+            {
+                logger.LogResponse(typeName,  JsonSerializer.Serialize(response));
+            }
+            
             return response;
         }
         catch (Exception exception)
         {
             logger.LogHandlingMessageError(exception, typeName);
+            logger.LogHandledMessage(typeName);
             throw;
         }
     }
