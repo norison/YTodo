@@ -9,3 +9,9 @@ Content-Type: application/json
   "password": "123456",
   "fullName": "Ihor Matiev"
 }
+
+
+### Secure
+GET {{baseUrl}}/auth/secure
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjIxNjMwNTksInN1YiI6IjEwMTMiLCJpYXQiOjE3MjIxNTk0NTksIm5iZiI6MTcyMjE1OTQ1OX0.DNf1q7reXgWedmUbcd_OEXHyYxELDrJCPxZ6XKIkqyc

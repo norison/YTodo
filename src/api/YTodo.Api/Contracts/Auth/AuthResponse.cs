@@ -1,6 +1,6 @@
-﻿namespace YTodo.Application.Features.Commands.RegisterUser;
+﻿namespace YTodo.Api.Contracts.Auth;
 
-public class RegisterUserCommandHandlerResult
+public class AuthResponse
 {
     public string Token { get; set; } = String.Empty;
     public DateTime ExpirationDateTime { get; set; }

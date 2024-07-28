@@ -1,4 +1,10 @@
-﻿using Mediator;
+﻿using System.Security.Claims;
+using System.Text;
+
+using Mediator;
+
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Tokens;
 
 using YTodo.Application.Abstractions.UserStorage;
 using YTodo.Application.Abstractions.UserStorage.Models;
@@ -23,6 +29,22 @@ public class RegisterUserCommandHandler(
 
         var userId = await userStorage.AddUserAsync(model, cancellationToken);
 
-        return new RegisterUserCommandHandlerResult { Id = userId };
+        var claims = new List<Claim> { new("sub", userId.ToString()) };
+
+        var expirationDateTime = DateTime.UtcNow.AddHours(1);
+
+        var key = new SymmetricSecurityKey("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"u8.ToArray());
+        var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature);
+
+        var securityTokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(claims),
+            Expires = expirationDateTime,
+            SigningCredentials = credentials
+        };
+
+        var token = new JsonWebTokenHandler().CreateToken(securityTokenDescriptor);
+
+        return new RegisterUserCommandHandlerResult { Token = token, ExpirationDateTime = expirationDateTime };
     }
 }

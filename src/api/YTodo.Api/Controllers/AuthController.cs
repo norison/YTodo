@@ -1,7 +1,11 @@
-﻿using Mediator;
+﻿using System.Security.Claims;
 
+using Mediator;
+
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+using YTodo.Api.Contracts.Auth;
 using YTodo.Api.Contracts.Auth.RegisterUser;
 using YTodo.Application.Features.Commands.RegisterUser;
 
@@ -20,7 +24,17 @@ public class AuthController(ISender mediator) : ControllerBase
         };
 
         var result = await mediator.Send(command, cancellationToken);
-
-        return Ok(new RegisterUserResponse { Id = result.Id });
+        var response = new AuthResponse { Token = result.Token, ExpirationDateTime = result.ExpirationDateTime };
+        
+        return Ok(response);
+    }
+    
+    [HttpGet("secure")]
+    [Authorize]
+    public IActionResult Get()
+    {
+        var userId = int.Parse(HttpContext.User.FindFirstValue("sub")!);
+        
+        return Ok($"Hello user with id {userId}");
     }
 }
