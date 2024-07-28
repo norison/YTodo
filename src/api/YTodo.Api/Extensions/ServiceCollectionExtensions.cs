@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
+using FluentValidation;
+
 using Mediator;
 
 using Microsoft.EntityFrameworkCore;
@@ -19,9 +21,11 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediator(options => options.ServiceLifetime = ServiceLifetime.Singleton);
         services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
+        services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
+        services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Singleton);
         
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
-
         services.AddSingleton<IUserStorage, UserStorage>();
         
         return services;
