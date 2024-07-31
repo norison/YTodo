@@ -24,17 +24,29 @@ public class AuthController(ISender mediator) : ControllerBase
         };
 
         var result = await mediator.Send(command, cancellationToken);
-        var response = new AuthResponse { Token = result.Token, ExpirationDateTime = result.ExpirationDateTime };
         
+        var response = new AuthResponse
+        {
+            AccessToken = result.AccessToken,
+            RefreshToken = result.RefreshToken,
+            ExpirationDateTime = result.ExpirationDateTime
+        };
+
         return Ok(response);
     }
     
+    [HttpPost("refresh")]
+    public async Task<IActionResult> RefreshAsync(CancellationToken cancellationToken)
+    {
+        return Ok();
+    }
+
     [HttpGet("secure")]
     [Authorize]
     public IActionResult Get()
     {
         var userId = int.Parse(HttpContext.User.FindFirstValue("sub")!);
-        
+
         return Ok($"Hello user with id {userId}");
     }
 }

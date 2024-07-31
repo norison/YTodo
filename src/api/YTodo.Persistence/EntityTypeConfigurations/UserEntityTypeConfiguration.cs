@@ -18,7 +18,7 @@ public class UserEntityTypeConfiguration : IEntityTypeConfiguration<UserEntity>
         builder.Property(x => x.FullName).IsRequired().HasMaxLength(100);
         
         builder
-            .HasMany(x => x.Tasks)
+            .HasMany(x => x.Todos)
             .WithOne(x => x.User)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);

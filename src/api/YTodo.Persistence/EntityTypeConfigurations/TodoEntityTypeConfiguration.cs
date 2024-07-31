@@ -21,7 +21,7 @@ public class TodoEntityTypeConfiguration : IEntityTypeConfiguration<TodoEntity>
         
         builder
             .HasOne(x => x.User)
-            .WithMany(x => x.Tasks)
+            .WithMany(x => x.Todos)
             .HasForeignKey(x => x.UserId)
             .OnDelete(DeleteBehavior.Cascade);
     }

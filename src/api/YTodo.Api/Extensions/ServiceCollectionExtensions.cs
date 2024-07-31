@@ -6,6 +6,7 @@ using Mediator;
 
 using Microsoft.EntityFrameworkCore;
 
+using YTodo.Application.Abstractions.TokeStorage;
 using YTodo.Application.Abstractions.UserStorage;
 using YTodo.Application.Behaviors;
 using YTodo.Application.Services.PasswordHasher;
@@ -27,6 +28,7 @@ public static class ServiceCollectionExtensions
         
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IUserStorage, UserStorage>();
+        services.AddSingleton<ITokenStorage, TokenStorage>();
         
         return services;
     }

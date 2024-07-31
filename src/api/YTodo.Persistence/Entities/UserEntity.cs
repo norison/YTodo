@@ -1,4 +1,6 @@
-﻿namespace YTodo.Persistence.Entities;
+﻿using System.Collections;
+
+namespace YTodo.Persistence.Entities;
 
 public class UserEntity
 {
@@ -6,6 +8,7 @@ public class UserEntity
     public string Email { get; set; } = string.Empty;
     public string PasswordHash { get; set; } = string.Empty;
     public string FullName { get; set; } = string.Empty;
-    
-    public IEnumerable<TodoEntity>? Tasks { get; set; }
+
+    public IEnumerable<RefreshTokenEntity>? RefreshTokens { get; set; }
+    public IEnumerable<TodoEntity>? Todos { get; set; }
 }
