@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 using YTodo.Api.Contracts;
 using YTodo.Api.Extensions;
+using YTodo.Application.Exceptions;
 using YTodo.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,7 +29,7 @@ builder.Services.AddAuthentication(options =>
         ValidateLifetime = true,
         ValidateIssuerSigningKey = true,
         ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"u8.ToArray())
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
     };
 });
 
@@ -54,12 +55,39 @@ app.Use(async (context, next) =>
     catch (Exception exception)
     {
         Console.WriteLine(exception);
+        
+        ErrorResponse response;
 
         switch (exception)
         {
             case ValidationException validationException:
                 context.Response.StatusCode = 400;
-                var response = new ErrorResponse { Message = validationException.Errors.First().ErrorMessage };
+                response = new ErrorResponse
+                {
+                    Code = 0,
+                    Message = "Validation error",
+                    Details = validationException.Errors.First().ErrorMessage
+                };
+                await context.Response.WriteAsJsonAsync(response);
+                break;
+            case YTodoException yTodoException:
+                context.Response.StatusCode = 400;
+                response = new ErrorResponse
+                {
+                    Code = yTodoException.Code,
+                    Message = yTodoException.Message,
+                    Details = yTodoException.Details
+                };
+                await context.Response.WriteAsJsonAsync(response);
+                break;
+            default:
+                context.Response.StatusCode = 500;
+                response = new ErrorResponse
+                {
+                    Code = -1,
+                    Message = "Internal server error",
+                    Details = "An unexpected error occurred"
+                };
                 await context.Response.WriteAsJsonAsync(response);
                 break;
         }

@@ -4,7 +4,7 @@ using Mediator;
 
 namespace YTodo.Application.Behaviors;
 
-public class ValidationBehavior<TMessage, TResponse>(IValidator<TMessage> validator)
+public class ValidationBehavior<TMessage, TResponse>(IEnumerable<IValidator<TMessage>> validators)
     : IPipelineBehavior<TMessage, TResponse> where TMessage : IMessage
 {
     public async ValueTask<TResponse> Handle(
@@ -12,7 +12,10 @@ public class ValidationBehavior<TMessage, TResponse>(IValidator<TMessage> valida
         CancellationToken cancellationToken,
         MessageHandlerDelegate<TMessage, TResponse> next)
     {
-        await validator.ValidateAndThrowAsync(message, cancellationToken);
+        var tasks = validators.Select(validator => validator.ValidateAndThrowAsync(message, cancellationToken));
+
+        await Task.WhenAll(tasks);
+        
         return await next(message, cancellationToken);
     }
 }

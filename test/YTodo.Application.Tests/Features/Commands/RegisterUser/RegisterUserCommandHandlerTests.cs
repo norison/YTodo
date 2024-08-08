@@ -1,15 +1,4 @@
-﻿using AutoFixture;
-
-using FluentAssertions;
-
-using NSubstitute;
-
-using YTodo.Application.Abstractions.UserStorage;
-using YTodo.Application.Abstractions.UserStorage.Models;
-using YTodo.Application.Features.Commands.RegisterUser;
-using YTodo.Application.Services.PasswordHasher;
-
-namespace YTodo.Application.Tests.Features.Commands.RegisterUser;
+﻿namespace YTodo.Application.Tests.Features.Commands.RegisterUser;
 
 public class RegisterUserCommandHandlerTests : TestBase
 {

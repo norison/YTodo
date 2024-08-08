@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace YTodo.Application.Features.Commands.RegisterUser;
+namespace YTodo.Application.Features.Auth.Commands.RegisterUser;
 
 public class RegisterUserCommandValidator : AbstractValidator<RegisterUserCommand>
 {

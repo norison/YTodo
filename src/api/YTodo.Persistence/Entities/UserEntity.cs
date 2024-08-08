@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-namespace YTodo.Persistence.Entities;
+﻿namespace YTodo.Persistence.Entities;
 
 public class UserEntity
 {

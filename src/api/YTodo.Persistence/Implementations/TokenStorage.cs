@@ -12,6 +12,15 @@ public class TokenStorage(IDbContextFactory<YTodoDbContext> dbContextFactory) : 
     {
         await using var dbContext = await dbContextFactory.CreateDbContextAsync(cancellationToken);
 
+        var oldRefreshToken = await dbContext.RefreshTokens.FirstOrDefaultAsync(x => x.UserId == model.UserId, cancellationToken);
+        
+        if(oldRefreshToken is not null)
+        {
+            oldRefreshToken.RefreshToken = model.RefreshToken;
+            await dbContext.SaveChangesAsync(cancellationToken);
+            return;
+        }
+
         var refreshToken = new RefreshTokenEntity { UserId = model.UserId, RefreshToken = model.RefreshToken };
 
         await dbContext.RefreshTokens.AddAsync(refreshToken, cancellationToken);

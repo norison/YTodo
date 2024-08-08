@@ -9,7 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using YTodo.Application.Abstractions.TokeStorage;
 using YTodo.Application.Abstractions.UserStorage;
 using YTodo.Application.Behaviors;
+using YTodo.Application.Options;
 using YTodo.Application.Services.PasswordHasher;
+using YTodo.Application.Services.Token;
 using YTodo.Persistence;
 using YTodo.Persistence.Implementations;
 
@@ -25,11 +27,18 @@ public static class ServiceCollectionExtensions
         services.AddSingleton(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
         services.AddValidatorsFromAssemblies(AppDomain.CurrentDomain.GetAssemblies(), ServiceLifetime.Singleton);
-        
+
         services.AddSingleton<IPasswordHasher, PasswordHasher>();
         services.AddSingleton<IUserStorage, UserStorage>();
         services.AddSingleton<ITokenStorage, TokenStorage>();
+        services.AddSingleton<ITokenService, TokenService>();
         
+        services
+            .AddOptions<TokenOptions>()
+            .BindConfiguration("Jwt")
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
         return services;
     }
 
